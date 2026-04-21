@@ -1,21 +1,20 @@
 package com.vitorsalb.sendfeignmigration.application.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.vitorsalb.sendfeignmigration.infra.port.integration.ReceiverControllerFeign;
+
 import com.vitorsalb.sendfeignmigration.infra.port.integration.ReceiverControllerFeignImpl;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.JsonNodeFactory;
+import tools.jackson.databind.node.ObjectNode;
 
 @Service
 public class SenderService {
 
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private final ReceiverControllerFeignImpl receiverControllerFeign;
 
-    public SenderService(ObjectMapper objectMapper, ReceiverControllerFeignImpl receiverControllerFeign) {
-        this.objectMapper = objectMapper;
+    public SenderService(ReceiverControllerFeignImpl receiverControllerFeign) {
         this.receiverControllerFeign = receiverControllerFeign;
     }
 
@@ -23,7 +22,7 @@ public class SenderService {
         ObjectNode envelope = JsonNodeFactory.instance.objectNode();
         ObjectNode metadados = JsonNodeFactory.instance.objectNode();
 
-        metadados.set("source", JsonNodeFactory.instance.textNode("SenderService"));
+        metadados.set("source", JsonNodeFactory.instance.stringNode("SenderService"));
 
         envelope.set("mensagemOrig", message);
         envelope.set("metadados", metadados);
