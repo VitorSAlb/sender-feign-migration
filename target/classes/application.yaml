@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: send-feign-migration
+
+receiver:
+  base-url: http://localhost:8081
